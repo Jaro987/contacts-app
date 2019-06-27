@@ -21,7 +21,7 @@ app.get('/api/contacts', (req, res) =>{
 
 
 app.post('/api/contacts', (req, res) => {
-
+	console.log(req.body);
 	const contact = {
 		id: contacts.length + 1,
 		firstName: req.body.firstName,

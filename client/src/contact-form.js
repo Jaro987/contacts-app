@@ -23,15 +23,14 @@ class ContactForm extends React.Component {
   handleSubmit= async event => {
     event.preventDefault();
     const data = new Contact(this.state.firstName, this.state.lastName, this.state.email);
-    console.log(data);
     const jsondata = JSON.stringify(data);
-    console.log(jsondata);
     
     fetch('/api/contacts', {
       method: 'POST',
-      body: JSON.stringify(data),
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
     });
   }
 
