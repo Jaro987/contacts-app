@@ -23,7 +23,6 @@ class ContactForm extends React.Component {
   handleSubmit= async event => {
     event.preventDefault();
     const data = new Contact(this.state.firstName, this.state.lastName, this.state.email);
-    const jsondata = JSON.stringify(data);
     
     fetch('/api/contacts', {
       method: 'POST',

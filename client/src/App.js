@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ContactForm from './contact-form.js'
+import ContactForm from './contacts-form.js'
+import ContactDisplay from './contacts-display.js'
 import './App.css';
 
 
@@ -30,6 +31,7 @@ render() {
     return (
       <div className="App">
         <ContactForm />
+        <ContactDisplay />
       </div>
     );
   }
