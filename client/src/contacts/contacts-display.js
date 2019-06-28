@@ -44,7 +44,11 @@ class ContactDisplay extends React.Component {
                 <tr key={index}>
                     <td>{post.firstName}</td>
                     <td>{post.lastName}</td>
-                   <td>{post.email}</td>
+                    <td>{post.email}</td>
+                    <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>
                 </tr>
                 )
         });  
@@ -62,6 +66,7 @@ class ContactDisplay extends React.Component {
                                 <th>First name</th>
                                 <th>Last name</th>
                                 <th>Email</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
