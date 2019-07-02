@@ -8,30 +8,64 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 // API calls
-app.get('/api/contacts', (req, res) =>{
-	if(!contacts){
-		res.status(404).json({message: 'No contacts found!'});
-	}
-	res.json(contacts);
+app.get('/api/contacts', (req, res) => {
+    if (!contacts) {
+        res.status(404).json({
+            message: 'No contacts found!'
+        });
+    }
+    res.json(contacts);
 });
 
 
 
 app.post('/api/contacts', (req, res) => {
-	console.log(req.body);
-	const contact = {
-		id: contacts.length + 1,
-		firstName: req.body.firstName,
-		lastName: req.body.lastName,
-		email: req.body.email
-	}
+    console.log(req.body);
+    const contact = {
+        id: contacts.length + 1,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email
+    }
 
-	contacts.push(contact);
+    contacts.push(contact);
 
-	res.json(contact);
+    res.json(contact);
+});
+
+
+app.put('/api/contacts/:id', (req, res) => {
+
+    const id = parseInt(req.params.id);
+    console.log(req.params.id);
+    let contactFound;
+    let contactIndex;
+    contacts.map((contact, index) => {
+        if (contact.id === id) {
+            contactFound = contact;
+            contactIndex = index;
+        }
+    });
+
+    if (!contactFound) {
+        return res.status(400);
+    }
+
+    const updatedContact = {
+        id: contactFound.id,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email
+    };
+
+    contacts.splice(contactIndex, 1, updatedContact);
+    res.json(updatedContact);
+    return res.status(201);
 });
 
 
