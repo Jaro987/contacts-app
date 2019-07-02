@@ -6,6 +6,7 @@ export interface ContactRowProps {
   index: number;
   contactChanged?: ()=>void;
   contactAdded?: ()=>void;
+  contactDeleted?: ()=>void;
 }
 export interface ContactRowState {
     editing: boolean;
@@ -74,6 +75,31 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
 
   }
 
+  handleDelete= async (event:any) => {
+    event.preventDefault();
+    //const data = new Contact(this.state.firstName, this.state.lastName, this.state.email);
+    
+    fetch('/api/contacts/'+ this.props.contact.id, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      //body: JSON.stringify(data)
+    }).then(response => response.json())
+      .then(
+        // handle the result
+        result => {
+            this.props.contactDeleted && this.props.contactDeleted();
+        },
+
+        // Handle error
+        error => {
+          console.error('Deleting contact failed: ', error);
+        }
+      );
+
+  }
+
   render() {
     if(this.state.editing){
         return (
@@ -85,7 +111,7 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
                     <td><input type="text" name = "email" value= {this.state.email} onChange={this.handleEmailChange}/></td>
                     <td>
                       <button onClick={this.handleSubmit}>Save</button>
-                      <button>Delete</button>
+                      <button onClick={this.handleDelete}>Delete</button>
                     </td>
                 </tr>
             
@@ -105,7 +131,7 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
                   >
                     Edit
                   </button>
-                  <button>Delete</button>
+                  <button onClick={this.handleDelete}>Delete</button>
                 </td>
               </tr>
         

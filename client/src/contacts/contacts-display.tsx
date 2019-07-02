@@ -55,14 +55,13 @@ this.reloadContacts = this.reloadContacts.bind(this);
 
     private renderRows(){
           return this.state.contacts.map((contact,index) => {
-           return <ContactRow key={"row_"+index} index={index} contact={contact} contactChanged = {this.reloadContacts} />
+           return <ContactRow key={"row_"+index} index={index} contact={contact} contactChanged = {this.reloadContacts} contactDeleted = {this.reloadContacts}/>
         });  
     }
 
 render() {
     return (
       <div>
-        <ContactForm contactAdded = {this.reloadContacts}/>
         <table className="table">
           <thead>
             <tr>
@@ -75,6 +74,7 @@ render() {
           </thead>
           <tbody>{this.renderRows()}</tbody>
         </table>
+        <ContactForm contactAdded = {this.reloadContacts}/>
       </div>
     );
   }

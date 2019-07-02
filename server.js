@@ -68,5 +68,27 @@ app.put('/api/contacts/:id', (req, res) => {
     return res.status(201);
 });
 
+app.delete('/api/contacts/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+
+    contacts.map((contact, index) => {
+        if (contact.id === id) {
+            contacts.splice(index, 1);
+            return res.status(200).send({
+                success: 'true',
+                message: 'Contact deleted successfuly',
+            });
+        }
+    });
+
+
+    return res.status(404).send({
+        success: 'false',
+        message: 'Contact not found',
+    });
+
+
+});
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
