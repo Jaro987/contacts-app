@@ -1,20 +1,26 @@
 import React from 'react';
 import Contact from './contact';
+import './popup.css';
+
 
 export interface ContactFormProps {
   contactAdded?: ()=>void;
 }
 
 export interface ContactFormState {
+  mode: boolean;
   firstName: string;
   lastName: string;
   email:string;
 }
 
+
+
 class ContactForm extends React.Component <ContactFormProps, ContactFormState> {
   constructor(props: any) {
     super(props);
     this.state = {
+      mode: true,
       firstName: '',
       lastName: '',
       email:''
@@ -22,7 +28,9 @@ class ContactForm extends React.Component <ContactFormProps, ContactFormState> {
 
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);    
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleMode = this.handleMode.bind(this);
   }
 
  
@@ -40,7 +48,12 @@ class ContactForm extends React.Component <ContactFormProps, ContactFormState> {
     this.setState({email : event.target.value});
   }
 
-  handleSubmit= async (event: any) => {
+  handleMode(){
+    (this.state.mode)?  this.setState({mode: false}): this.setState({mode: true});
+    ;
+  }
+
+  handleSubmit = async (event: any) => {
     event.preventDefault();
     const data = new Contact(this.state.firstName, this.state.lastName, this.state.email);
     
@@ -54,8 +67,9 @@ class ContactForm extends React.Component <ContactFormProps, ContactFormState> {
       .then(
         // handle the result
         result => {
-          console.log("jdjgsg");
+          
           this.props.contactAdded && this.props.contactAdded();
+          this.handleMode();
         },
 
         // Handle error
@@ -66,17 +80,52 @@ class ContactForm extends React.Component <ContactFormProps, ContactFormState> {
   }
 
   render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>First name:</label>
-        <input type="text" name ="firstName" value={this.state.firstName} onChange={this.handleFirstNameChange} /><br/>
-        <label>Last name:</label>
-        <input type="text" name ="lastName" value={this.state.lastName} onChange={this.handleLastNameChange} /><br/>
-        <label>Email:</label>
-        <input type="text" name = "email" value={this.state.email} onChange={this.handleEmailChange} /><br/>
-        <input type="submit" value="Submit" />
-      </form>
-    );
+    if(this.state.mode){
+      return(
+        <button onClick={this.handleMode} >Add contact</button>
+      );
+    }else{
+
+      return (
+        <div className = "Popup">
+          <div className = "Popup_inner">
+            <form onSubmit={this.handleSubmit}>
+              <table className = "Table" >
+                <tr>
+                  <td>First name:</td>
+                  <td>
+                    <input type="text" name ="firstName" value={this.state.firstName} onChange={this.handleFirstNameChange} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Last name:</td>
+                  <td>
+                    <input type="text" name ="lastName" value={this.state.lastName} onChange={this.handleLastNameChange} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Email:</td>
+                  <td>
+                    <input type="text" name = "email" value={this.state.email} onChange={this.handleEmailChange} /><br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><input type="submit" value="Submit" />
+                  <button onClick={this.handleMode} >Cancel</button></td>
+                </tr>
+              </table>
+              <p></p>
+              <span></span>
+            </form>
+          </div>
+        </div>
+
+        
+      );
+    }
+
+    
   }
 }
 
