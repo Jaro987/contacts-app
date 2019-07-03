@@ -77,6 +77,8 @@ class ContactForm extends React.Component <ContactFormProps, ContactFormState> {
           console.error('Adding contact failed: ', error);
         }
       );
+
+      this.setState({firstName: '', lastName: '', email: ''});
   }
 
   render() {
@@ -90,30 +92,33 @@ class ContactForm extends React.Component <ContactFormProps, ContactFormState> {
         <div className = "Popup">
           <div className = "Popup_inner">
             <form onSubmit={this.handleSubmit}>
+              <h1>Add new contact</h1>
               <table className = "Table" >
-                <tr>
-                  <td>First name:</td>
-                  <td>
-                    <input type="text" name ="firstName" value={this.state.firstName} onChange={this.handleFirstNameChange} />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Last name:</td>
-                  <td>
-                    <input type="text" name ="lastName" value={this.state.lastName} onChange={this.handleLastNameChange} />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Email:</td>
-                  <td>
-                    <input type="text" name = "email" value={this.state.email} onChange={this.handleEmailChange} /><br/>
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td><input type="submit" value="Submit" />
-                  <button onClick={this.handleMode} >Cancel</button></td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td className = "InputForm">First name:</td>
+                    <td className = "InputForm">
+                      <input type="text" name ="firstName" value={this.state.firstName} onChange={this.handleFirstNameChange} />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className = "InputForm">Last name:</td>
+                    <td className = "InputForm">
+                      <input type="text" name ="lastName" value={this.state.lastName} onChange={this.handleLastNameChange} />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className = "InputForm">Email:</td>
+                    <td className = "InputForm">
+                      <input type="text" name = "email" value={this.state.email} onChange={this.handleEmailChange} /><br/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className = "InputForm"></td>
+                    <td className = "InputForm"><input type="submit" value="Submit" />
+                    <button onClick={this.handleMode} >Cancel</button></td>
+                  </tr>
+                </tbody>
               </table>
               <p></p>
               <span></span>

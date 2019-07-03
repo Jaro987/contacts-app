@@ -14,7 +14,10 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-              <ContactDisplay />
+                <div className="App-header">
+                    <h1>Contact-app</h1>
+                </div>
+                <ContactDisplay />
             </div>
         );
     }

@@ -1,17 +1,21 @@
 class Contact {
-	public id: number;
+	private _id: string | undefined;
 	firstName: string;
 	lastName: string;
 	email: string;
 
 	constructor(fName: string, lName: string, emaill: string){
-		this.id = -1;
 		this.firstName = fName;
 		this.lastName = lName;
 		this.email = emaill;
 	}
 
-
+	get id(): string{
+		if(this._id){
+			return this._id;
+		}
+		return "";
+	}
 }
 
 export default Contact;

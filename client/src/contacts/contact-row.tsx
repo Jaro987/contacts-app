@@ -54,7 +54,7 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
     const data = new Contact(this.state.firstName, this.state.lastName, this.state.email);
     
     fetch('/api/contacts/'+ this.props.contact.id, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         "Content-Type": "application/json"
       },
@@ -78,14 +78,14 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
   handleDelete= async (event:any) => {
     event.preventDefault();
     //const data = new Contact(this.state.firstName, this.state.lastName, this.state.email);
-    
+    console.log("iz handleDelete: ", this.props.contact.id);
     fetch('/api/contacts/'+ this.props.contact.id, {
       method: 'DELETE',
       headers: {
         "Content-Type": "application/json"
       },
       //body: JSON.stringify(data)
-    }).then(response => response.json())
+    })//.then(response => response.json())
       .then(
         // handle the result
         result => {
@@ -133,8 +133,7 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
                   </button>
                   <button onClick={this.handleDelete}>Delete</button>
                 </td>
-              </tr>
-        
+              </tr>        
         )
     }
   }

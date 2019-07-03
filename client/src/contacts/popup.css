@@ -11,20 +11,25 @@
 }  
 .Popup_inner {  
   position: absolute;  
-  left: 25%;  
-  right: 25%;  
-  top: 25%;  
-  bottom: 25%;  
+  left: 35%;  
+  right: 35%;  
+  top: 35%;  
+  bottom: 35%;  
   margin: auto;  
-  border-radius: 20px;  
+  /*border-radius: 20px; */ 
   background: white;
 }
 
-.Table {
-  position: absolute;
-  left: 0;
-  margin: 100px;
-  width: 70%;
-  text-align: center;
 
+.Table {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.InputForm {
+  border-style: none;
 }

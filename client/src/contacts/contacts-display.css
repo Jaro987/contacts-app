@@ -1,8 +1,7 @@
-table, th, td {
+th, td {
   border: 1px solid black;
 }
 .table{
-	width: 70%;
-	justify-content: center;
+	width: 100%;
 
 }
