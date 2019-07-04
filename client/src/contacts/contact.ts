@@ -1,4 +1,5 @@
 class Contact {
+	private _id: string | undefined;
 	firstName: string;
 	lastName: string;
 	email: string;
@@ -8,5 +9,13 @@ class Contact {
 		this.lastName = lName;
 		this.email = emaill;
 	}
+
+	get id(): string{
+		if(this._id){
+			return this._id;
+		}
+		return "";
+	}
 }
+
 export default Contact;

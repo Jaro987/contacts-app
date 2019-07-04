@@ -1,38 +1,26 @@
 import React, { Component } from 'react';
-import ContactForm from './contact-form.js'
+
+import ContactDisplay from './contacts/contacts-display.tsx'
 import './App.css';
 
 
 class App extends Component {
-  state = {
-    response: '',
-    post: '',
-    responseToPost: '',
-  };
-  
-  /*componentDidMount() {
-    this.callApi()
-      .then(res => this.setState({ response: res.express }))
-      .catch(err => console.log(err));
-  }
-  
-  callApi = async () => {
-    const response = await fetch('/api/contacts');
-    const body = await response.json();
-   if (response.status !== 200) throw Error(body.message);
-    
-    return body;
-  };*/
-  
-  
-  
-render() {
-    return (
-      <div className="App">
-        <ContactForm />
-      </div>
-    );
-  }
+    state = {
+        response: '',
+        post: '',
+        responseToPost: '',
+    };
+
+    render() {
+        return (
+            <div className="App">
+                <div className="App-header">
+                    <h1>Contact-app</h1>
+                </div>
+                <ContactDisplay />
+            </div>
+        );
+    }
 }
 
 export default App;
