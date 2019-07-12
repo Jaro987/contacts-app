@@ -4,8 +4,6 @@ import Contact from "./contact";
 import ContactRow from "./contact-row";
 import ContactForm from "./contacts-form"
 
-
-//const contacts = require('./data.js');
 interface ContactDisplayState {
   error: any;
   isLoaded: boolean;
@@ -13,9 +11,9 @@ interface ContactDisplayState {
   contacts: Contact[];
 }
 
-interface ContactDisplayProps {}
+interface ContactDisplayProps { }
 
-export class ContactDisplay extends React.Component<ContactDisplayProps,ContactDisplayState> {
+export class ContactDisplay extends React.Component<ContactDisplayProps, ContactDisplayState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -24,26 +22,23 @@ export class ContactDisplay extends React.Component<ContactDisplayProps,ContactD
       editing: false,
       contacts: []
     };
-this.reloadContacts = this.reloadContacts.bind(this);
+    this.reloadContacts = this.reloadContacts.bind(this);
 
   }
   componentDidMount() {
     this.reloadContacts();
   }
 
-  private reloadContacts (){
-      fetch("/api/contacts")
+  private reloadContacts() {
+    fetch("/api/contacts")
       .then(response => response.json())
       .then(
-        // handle the result
         result => {
           this.setState({
             isLoaded: true,
             contacts: result
           });
         },
-
-        // Handle error
         error => {
           this.setState({
             isLoaded: true,
@@ -53,13 +48,13 @@ this.reloadContacts = this.reloadContacts.bind(this);
       );
   }
 
-    private renderRows(){
-          return this.state.contacts.map((contact,index) => {
-           return <ContactRow key={"row_"+index} index={index} contact={contact} contactChanged = {this.reloadContacts} contactDeleted = {this.reloadContacts}/>
-        });  
-    }
+  private renderRows() {
+    return this.state.contacts.map((contact, index) => {
+      return <ContactRow key={"row_" + index} index={index} contact={contact} contactChanged={this.reloadContacts} contactDeleted={this.reloadContacts} />
+    });
+  }
 
-render() {
+  render() {
     return (
       <div>
         <table className="table">
@@ -74,7 +69,7 @@ render() {
           </thead>
           <tbody>{this.renderRows()}</tbody>
         </table>
-        <ContactForm contactAdded = {this.reloadContacts}/>
+        <ContactForm contactAdded={this.reloadContacts} />
       </div>
     );
   }
