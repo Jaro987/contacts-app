@@ -1,5 +1,5 @@
 import React from "react";
-import Contact from "./contact";
+import Contact from "./data";
 
 export interface ContactRowProps {
   contact: Contact;
@@ -8,6 +8,7 @@ export interface ContactRowProps {
   contactAdded?: () => void;
   contactDeleted?: () => void;
 }
+
 export interface ContactRowState {
   editing: boolean;
   id: string;
@@ -15,6 +16,7 @@ export interface ContactRowState {
   lastName: string;
   email: string;
 }
+
 class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
   constructor(props: any) {
     super(props);
@@ -23,7 +25,7 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
       id: props.contact._id,
       firstName: props.contact.firstName,
       lastName: props.contact.lastName,
-      email: props.contact.email,
+      email: props.contact.email
     };
 
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
@@ -38,7 +40,6 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
   }
 
   handleLastNameChange(event: any) {
-
     this.setState({ lastName: event.target.value });
   }
 
@@ -48,10 +49,14 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
 
   handleSubmit = async (event: any) => {
     event.preventDefault();
-    const data = new Contact(this.state.firstName, this.state.lastName, this.state.email);
+    const data = new Contact(
+      this.state.firstName,
+      this.state.lastName,
+      this.state.email
+    );
 
-    fetch('/api/contacts/' + this.state.id, {
-      method: 'POST',
+    fetch("/api/contacts/" + this.state.id, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
@@ -62,44 +67,63 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
         this.props.contactChanged && this.props.contactChanged();
       },
       error => {
-        console.error('Edit contact failed: ', error);
+        console.error("Edit contact failed: ", error);
       }
     );
-  }
+  };
 
   handleDelete = async (event: any) => {
     event.preventDefault();
-    fetch('/api/contacts/' + this.state.id, {
-      method: 'delete',
+    fetch("/api/contacts/" + this.state.id, {
+      method: "delete",
       headers: {
         "Content-Type": "application/json"
-      },
+      }
     }).then(
       result => {
         this.props.contactDeleted && this.props.contactDeleted();
       },
       error => {
-        console.error('Deleting contact failed: ', error);
+        console.error("Deleting contact failed: ", error);
       }
     );
-  }
+  };
 
   render() {
     if (this.state.editing) {
       return (
-
         <tr key={"tr_" + this.props.index}>
           <td>{this.props.index + 1}</td>
-          <td><input type="text" name="firstName" value={this.state.firstName} onChange={this.handleFirstNameChange} /></td>
-          <td><input type="text" name="lastName" value={this.state.lastName} onChange={this.handleLastNameChange} /></td>
-          <td><input type="text" name="email" value={this.state.email} onChange={this.handleEmailChange} /></td>
+          <td>
+            <input
+              type="text"
+              name="firstName"
+              value={this.state.firstName}
+              onChange={this.handleFirstNameChange}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="lastName"
+              value={this.state.lastName}
+              onChange={this.handleLastNameChange}
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="email"
+              value={this.state.email}
+              onChange={this.handleEmailChange}
+            />
+          </td>
           <td>
             <button onClick={this.handleSubmit}>Save</button>
             <button onClick={this.handleDelete}>Delete</button>
           </td>
         </tr>
-
-      )
+      );
     } else {
       return (
         <tr key={this.props.index}>
@@ -111,15 +135,16 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
             <button
               onClick={() => {
                 this.setState({ editing: true });
-              }}>Edit
+              }}
+            >
+              Edit
             </button>
             <button onClick={this.handleDelete}>Delete</button>
           </td>
         </tr>
-      )
+      );
     }
   }
 }
 
 export default ContactRow;
-

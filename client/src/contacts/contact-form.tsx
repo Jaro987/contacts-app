@@ -1,6 +1,6 @@
-import React from 'react';
-import Contact from './contact';
-import './popup.css';
+import React from "react";
+import Contact from "./data";
+import "./contact-form.css";
 
 export interface ContactFormProps {
   contactAdded?: () => void;
@@ -14,13 +14,14 @@ export interface ContactFormState {
 }
 
 class ContactForm extends React.Component<ContactFormProps, ContactFormState> {
+  state: { mode: boolean; firstName: string; lastName: string; email: string };
   constructor(props: any) {
     super(props);
     this.state = {
       mode: true,
-      firstName: '',
-      lastName: '',
-      email: ''
+      firstName: "",
+      lastName: "",
+      email: ""
     };
 
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
@@ -43,15 +44,21 @@ class ContactForm extends React.Component<ContactFormProps, ContactFormState> {
   }
 
   handleMode() {
-    this.state.mode ? this.setState({ mode: false }) : this.setState({ mode: true });
+    this.state.mode
+      ? this.setState({ mode: false })
+      : this.setState({ mode: true });
   }
 
   handleSubmit = async (event: any) => {
     event.preventDefault();
-    const data = new Contact(this.state.firstName, this.state.lastName, this.state.email);
+    const data = new Contact(
+      this.state.firstName,
+      this.state.lastName,
+      this.state.email
+    );
 
-    fetch('/api/contacts', {
-      method: 'POST',
+    fetch("/api/contacts", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
@@ -62,54 +69,69 @@ class ContactForm extends React.Component<ContactFormProps, ContactFormState> {
         this.handleMode();
       },
       error => {
-        console.error('Adding contact failed: ', error);
+        console.error("Adding contact failed: ", error);
       }
     );
 
-    this.setState({ firstName: '', lastName: '', email: '' });
-  }
+    this.setState({ firstName: "", lastName: "", email: "" });
+  };
 
   render() {
     if (this.state.mode) {
-      return (
-        <button onClick={this.handleMode} >Add contact</button>
-      );
+      return <button onClick={this.handleMode}>Add contact</button>;
     } else {
-
       return (
         <div className="Popup">
           <div className="Popup_inner">
             <form onSubmit={this.handleSubmit}>
               <h1>Add new contact</h1>
-              <table className="Table" >
+              <table className="Table">
                 <tbody>
                   <tr>
                     <td className="InputForm">First name:</td>
                     <td className="InputForm">
-                      <input type="text" name="firstName" value={this.state.firstName} onChange={this.handleFirstNameChange} />
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={this.state.firstName}
+                        onChange={this.handleFirstNameChange}
+                      />
                     </td>
                   </tr>
                   <tr>
                     <td className="InputForm">Last name:</td>
                     <td className="InputForm">
-                      <input type="text" name="lastName" value={this.state.lastName} onChange={this.handleLastNameChange} />
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={this.state.lastName}
+                        onChange={this.handleLastNameChange}
+                      />
                     </td>
                   </tr>
                   <tr>
                     <td className="InputForm">Email:</td>
                     <td className="InputForm">
-                      <input type="text" name="email" value={this.state.email} onChange={this.handleEmailChange} /><br />
+                      <input
+                        type="text"
+                        name="email"
+                        value={this.state.email}
+                        onChange={this.handleEmailChange}
+                      />
+                      <br />
                     </td>
                   </tr>
                   <tr>
-                    <td className="InputForm"></td>
-                    <td className="InputForm"><input type="submit" value="Submit" />
-                      <button onClick={this.handleMode} >Cancel</button></td>
+                    <td className="InputForm" />
+                    <td className="InputForm">
+                      <input type="submit" value="Submit" />
+                      <button onClick={this.handleMode}>Cancel</button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
-              <p></p>
-              <span></span>
+              <p />
+              <span />
             </form>
           </div>
         </div>
