@@ -83,6 +83,16 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
     );
   };
 
+  handleCancel = async (event: any) => {
+    console.log(this.state);
+    this.setState({
+      firstName: this.props.contact.firstName,
+      lastName: this.props.contact.lastName,
+      email: this.props.contact.email,
+      editing: false
+    });
+  };
+
   render() {
     if (this.state.editing) {
       return (
@@ -114,7 +124,7 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
           </td>
           <td>
             <button onClick={this.handleSubmit}>Save</button>
-            <button onClick={this.handleDelete}>Delete</button>
+            <button onClick={this.handleCancel}>Cancel</button>
           </td>
         </tr>
       );
