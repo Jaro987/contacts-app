@@ -1,6 +1,7 @@
-import React from "react";
+import * as React from "react";
 import Contact from "./data";
 import "./contact-form.css";
+import DataController from "./data-controller";
 
 export interface ContactFormProps {
   contactAdded?: () => void;
@@ -31,6 +32,8 @@ class ContactForm extends React.Component<ContactFormProps, ContactFormState> {
     this.handleMode = this.handleMode.bind(this);
   }
 
+  private readonly controller: DataController = new DataController();
+
   handleFirstNameChange(event: any) {
     this.setState({ firstName: event.target.value });
   }
@@ -57,13 +60,7 @@ class ContactForm extends React.Component<ContactFormProps, ContactFormState> {
       this.state.email
     );
 
-    fetch("/api/contacts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    }).then(
+    this.controller.saveContact(data).then(
       result => {
         this.props.contactAdded && this.props.contactAdded();
         this.handleMode();

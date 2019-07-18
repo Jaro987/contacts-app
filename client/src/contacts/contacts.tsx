@@ -40,7 +40,6 @@ class ContactDisplay extends React.Component<
   }
 
   private renderRows() {
-    console.log("render rows", this.props);
     return this.props.contacts.map((contact: Contact, index: number) => {
       return (
         <ContactRow

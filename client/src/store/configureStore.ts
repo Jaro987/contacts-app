@@ -23,8 +23,4 @@ function rootReducer(state: any, action: any) {
 
 var store = createStore(rootReducer);
 
-// store.subscribe(function() {
-//   console.log("state", store.getState());
-// });
-
 export default store;

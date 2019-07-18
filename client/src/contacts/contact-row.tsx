@@ -1,5 +1,6 @@
 import React from "react";
 import Contact from "./data";
+import DataController from "./data-controller";
 
 export interface ContactRowProps {
   contact: Contact;
@@ -35,6 +36,8 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  private readonly controller: DataController = new DataController();
+
   handleFirstNameChange(event: any) {
     this.setState({ firstName: event.target.value });
   }
@@ -55,16 +58,12 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
       this.state.email
     );
 
-    fetch("/api/contacts/" + this.state.id, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    }).then(
+    let editedContact = Object.assign({}, data, { id: this.state.id });
+
+    this.controller.saveContact(editedContact).then(
       result => {
-        this.setState({ editing: false });
         this.props.contactChanged && this.props.contactChanged();
+        this.setState({ editing: false });
       },
       error => {
         console.error("Edit contact failed: ", error);
@@ -74,12 +73,7 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
 
   handleDelete = async (event: any) => {
     event.preventDefault();
-    fetch("/api/contacts/" + this.state.id, {
-      method: "delete",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(
+    this.controller.deleteContact(this.state.id).then(
       result => {
         this.props.contactDeleted && this.props.contactDeleted();
       },
