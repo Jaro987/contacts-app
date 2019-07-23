@@ -60,31 +60,27 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
 
     let editedContact = Object.assign({}, data, { id: this.state.id });
 
-    this.controller.saveContact(editedContact).then(
-      result => {
-        this.props.contactChanged && this.props.contactChanged();
-        this.setState({ editing: false });
-      },
-      error => {
-        console.error("Edit contact failed: ", error);
-      }
-    );
+    try {
+      await this.controller.saveContact(editedContact);
+      this.props.contactChanged && this.props.contactChanged();
+      this.setState({ editing: false });
+    } catch (error) {
+      console.error("Edit contact failed: ", error);
+    }
   };
 
   handleDelete = async (event: any) => {
     event.preventDefault();
-    this.controller.deleteContact(this.state.id).then(
-      result => {
-        this.props.contactDeleted && this.props.contactDeleted();
-      },
-      error => {
-        console.error("Deleting contact failed: ", error);
-      }
-    );
+
+    try {
+      await this.controller.deleteContact(this.state.id);
+      this.props.contactDeleted && this.props.contactDeleted();
+    } catch (error) {
+      console.error("Deleting contact failed: ", error);
+    }
   };
 
-  handleCancel = async (event: any) => {
-    console.log(this.state);
+  handleCancel = (event: any) => {
     this.setState({
       firstName: this.props.contact.firstName,
       lastName: this.props.contact.lastName,

@@ -12,12 +12,9 @@ interface ContactDisplayProps {
   contacts: [];
 }
 
-interface ContactDisplayState {}
+interface ContactDisplayState { }
 
-class ContactDisplay extends React.Component<
-  ContactDisplayProps,
-  ContactDisplayState
-> {
+class ContactDisplay extends React.Component<ContactDisplayProps, ContactDisplayState> {
   constructor(props: any) {
     super(props);
     this.reloadContacts = this.reloadContacts.bind(this);
@@ -26,17 +23,14 @@ class ContactDisplay extends React.Component<
     this.reloadContacts();
   }
 
-  private reloadContacts() {
-    fetch("/api/contacts")
-      .then(response => response.json())
-      .then(
-        result => {
-          store.dispatch({ type: "CONTACTS_LOADED", data: result });
-        },
-        error => {
-          store.dispatch({ type: "CONTACTS_LOADING_FAILED", data: error });
-        }
-      );
+  private async reloadContacts() {
+    try {
+      const response = await fetch("/api/contacts")
+      const contacts = await response.json()
+      store.dispatch({ type: "CONTACTS_LOADED", data: contacts });
+    } catch (error) {
+      store.dispatch({ type: "CONTACTS_LOADING_FAILED", data: error });
+    }
   }
 
   private renderRows() {

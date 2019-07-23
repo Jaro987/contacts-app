@@ -47,9 +47,7 @@ class ContactForm extends React.Component<ContactFormProps, ContactFormState> {
   }
 
   handleMode() {
-    this.state.mode
-      ? this.setState({ mode: false })
-      : this.setState({ mode: true });
+    this.state.mode ? this.setState({ mode: false }) : this.setState({ mode: true });
   }
 
   handleSubmit = async (event: any) => {
@@ -60,15 +58,13 @@ class ContactForm extends React.Component<ContactFormProps, ContactFormState> {
       this.state.email
     );
 
-    this.controller.saveContact(data).then(
-      result => {
-        this.props.contactAdded && this.props.contactAdded();
-        this.handleMode();
-      },
-      error => {
-        console.error("Adding contact failed: ", error);
-      }
-    );
+    try {
+      await this.controller.saveContact(data);
+      this.props.contactAdded && this.props.contactAdded();
+      this.handleMode();
+    } catch (error) {
+      console.error("Adding contact failed: ", error);
+    }
 
     this.setState({ firstName: "", lastName: "", email: "" });
   };
