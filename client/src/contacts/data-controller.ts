@@ -2,7 +2,7 @@ import Contact from "./data";
 
 class DataController {
   public saveContact(req: Contact) {
-    return fetch("/api/contacts/" + req.id, {
+    return fetch(`/api/contacts/${req.id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -12,7 +12,7 @@ class DataController {
   }
 
   public deleteContact(req: string) {
-    return fetch("/api/contacts/" + req, {
+    return fetch(`/api/contacts/${req}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"

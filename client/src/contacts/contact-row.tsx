@@ -92,7 +92,7 @@ class ContactRow extends React.Component<ContactRowProps, ContactRowState> {
   render() {
     if (this.state.editing) {
       return (
-        <tr key={"tr_" + this.props.index}>
+        <tr key={`tr_${this.props.index}`}>
           <td>{this.props.index + 1}</td>
           <td>
             <input

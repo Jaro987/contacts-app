@@ -37,7 +37,7 @@ class ContactDisplay extends React.Component<ContactDisplayProps, ContactDisplay
     return this.props.contacts.map((contact: Contact, index: number) => {
       return (
         <ContactRow
-          key={"row_" + index}
+          key={`row_${index}`}
           index={index}
           contact={contact}
           contactChanged={this.reloadContacts}
